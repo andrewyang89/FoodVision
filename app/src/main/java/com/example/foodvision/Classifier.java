@@ -42,7 +42,7 @@ public class Classifier {
     }
 
     public String predict(Bitmap bitmap){
-        Tensor tensor = preprocess(bitmap,224);
+        Tensor tensor = preprocess(bitmap,180);
 
         IValue inputs = IValue.from(tensor);
         Tensor outputs = model.forward(inputs).toTensor();
