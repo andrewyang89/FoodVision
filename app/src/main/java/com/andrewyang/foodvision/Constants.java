@@ -1,4 +1,4 @@
-package com.example.foodvision;
+package com.andrewyang.foodvision;
 
 public class Constants {
     public static String[] CLASSES = new String[]{

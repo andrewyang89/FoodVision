@@ -1,4 +1,4 @@
-package com.example.foodvision;
+package com.andrewyang.foodvision;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

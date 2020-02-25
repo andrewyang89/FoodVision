@@ -1,4 +1,4 @@
-package com.example.foodvision;
+package com.andrewyang.foodvision;
 
 import org.junit.Test;
 
