@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView;
 
+    ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textView = (TextView) findViewById(R.id.result);
+        textView = (TextView) findViewById(R.id.result);
+        imageView = (ImageView) findViewById(R.id.imageView);
         classifier = new Classifier(Utils.assetFilePath(this,"fc101_ts_midres.pt"));
 
         Button capture = findViewById(R.id.capture);
@@ -52,21 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == cameraRequestCode && resultCode == RESULT_OK){
 
-            Intent resultView = new Intent(this,Result.class);
-
-            resultView.putExtra("imagedata",data.getExtras());
-
             Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
 
             String pred = classifier.predict(imageBitmap);
             System.out.println(pred);
-            //textView.setText(pred);
-
-
-            //resultView.putExtra("pred",pred);
-
-            //startActivity(resultView);
-
+            textView.setText(pred);
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+            imageBitmap = Bitmap.createScaledBitmap(imageBitmap, width, width, true);
+            imageView.setImageBitmap(imageBitmap);
         }
     }
 }
